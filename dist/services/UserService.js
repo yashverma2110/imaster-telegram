@@ -17,11 +17,30 @@ class UserService {
     constructor() {
         this._token = null;
     }
+    getToken() {
+        return this._token;
+    }
+    checkIfUserExists(telegramId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield axios_1.default.get(`/user/get/${telegramId}`);
+                this._token = response.data.token;
+                return {
+                    success: true,
+                };
+            }
+            catch (error) {
+                return {
+                    success: false,
+                };
+            }
+        });
+    }
     createUser(user) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const response = yield axios_1.default.post('/user/signup', user);
+                const response = yield axios_1.default.post("/user/signup", user);
                 this._token = response.data.token;
                 return {
                     success: true,

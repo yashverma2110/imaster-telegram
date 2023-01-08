@@ -1,6 +1,7 @@
-import express, { Express, Request, Response } from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import express, { Express, Request, Response } from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import morgan from "morgan";
 
 dotenv.config();
 
@@ -10,13 +11,13 @@ const port = process.env.PORT;
 // middlwares
 app.use(
   cors({
-    origin: '*',
+    origin: "*",
   })
 );
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('[server]: imasterit Telegram bot ready to use');
+app.get("/", (req: Request, res: Response) => {
+  res.send("[server]: imasterit Telegram bot ready to use");
 });
 
 app.listen(port, () => {
