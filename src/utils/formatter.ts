@@ -1,4 +1,4 @@
-const bold = (str: string, inHTML: boolean) => {
+const bold = (str: string, inHTML: boolean = false) => {
   if (inHTML) {
     return `<strong>${str}</strong>`;
   }
@@ -6,7 +6,7 @@ const bold = (str: string, inHTML: boolean) => {
   return `*${str}*`;
 };
 
-const italic = (str: string, inHTML: boolean) => {
+const italic = (str: string, inHTML: boolean = false) => {
   if (inHTML) {
     return `<i>${str}</i>`;
   }
