@@ -1,7 +1,9 @@
 export enum commandList {
+  START = 'start',
   REGISTER = 'register',
   LIST = 'list',
   SUBSCRIBE = 'subscribe',
+  HELP = 'help',
 }
 
 const COMMANDS = [
