@@ -6,6 +6,7 @@ import COMMANDS, { commandList } from './src/utils/commands';
 
 import { bold, italic } from './src/utils/formatter';
 import { CronService } from './src/services/CronService';
+import dateUtil from './src/utils/dayjs';
 
 dotenv.config();
 
@@ -126,7 +127,7 @@ bot.command(commandList.SUBSCRIBE, async (ctx: any) => {
     return;
   }
 
-  const { success, isTopicNotFound, isAlreadySubscribed } =
+  const { success, data, isTopicNotFound, isAlreadySubscribed } =
     await UserService.subscribeToTopic(topicName, ctx.state.token);
 
   if (!success) {
@@ -154,11 +155,15 @@ bot.command(commandList.SUBSCRIBE, async (ctx: any) => {
     return;
   }
 
+  console.log('🚀 ~ file: index.ts:167 ~ bot.command ~ data:', data);
   const { success: isCronSuccess } = await CronService.scheduleConcept({
-    topic: '',
+    topicId: data.subscription.topicId,
     token: ctx.state.token,
     bot,
     chatId: ctx.chat.id,
+    time:
+      dateUtil().add(1, 'minute').format('hh:mm A') ??
+      data.subscription.remindAt,
   });
 
   if (!isCronSuccess) {

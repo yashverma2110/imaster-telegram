@@ -1,24 +1,28 @@
 import cron from 'node-cron';
 import ApiClient from '../utils/axios';
+import dateUtil from '../utils/dayjs';
 
 export const CronService = {
   async scheduleConcept({
-    topic,
+    topicId,
     token,
     bot,
     chatId,
+    time,
   }: {
-    topic: any;
+    topicId: string;
     token: string;
     bot: any;
     chatId: number;
+    time: string;
   }) {
-    const scheduleAt = '*/5 * * * * *';
+    const scheduleAt = dateUtil(`12-07-23 ${time}`).format('m H * * *');
+
     const job: any = cron.schedule(
       scheduleAt,
       async function () {
         try {
-          const response = await ApiClient.get('/concept/random');
+          const response = await ApiClient.get(`/concept/random/${topicId}`);
           const concept = response.data.concept[0];
 
           if (!concept) {

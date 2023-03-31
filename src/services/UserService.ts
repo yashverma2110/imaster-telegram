@@ -13,8 +13,7 @@ export const UserService = {
     } catch (error: any) {
       console.log(
         '🚀 ~ file: UserService.ts:23 ~ checkIfUserExists ~ error:',
-        error.message,
-        error.status
+        error
       );
       return {
         success: false,
@@ -68,21 +67,26 @@ export const UserService = {
 
   async subscribeToTopic(topicShortName: string, token: string) {
     try {
-      await ApiClient.post(
-        '/user/subscribe',
-        {
-          topic: topicShortName,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+     const response = await ApiClient.post(
+       '/user/subscribe',
+       {
+         topic: topicShortName,
+       },
+       {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       }
+     );
+     console.log(
+       '🚀 ~ file: UserService.ts:82 ~ subscribeToTopic ~ response:',
+       response.data
+     );
 
-      return {
-        success: true,
-      };
+     return {
+       success: true,
+       data: response.data,
+     };
     } catch (error) {
       const err = error as AxiosError;
       console.log(
